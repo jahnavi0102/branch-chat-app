@@ -1,25 +1,39 @@
-# Chat App #
+# Chat App 
 
-## Description ##
+
+## Description 
     . Basic chat app to make one-to-one conversation between the agents and the client.
     
-## Pre-Requisite to install ##
+
+## Pre-Requisite to install 
     . Python==3.9.13
     . virutualenv venv
     . pip install -r requirements.txt
-    
-### Automatic ###                                   ### Manual in setting.py under database ###
-    . install docker if not already setup           . USER = "postgres"  / can be of your own preference as well
-    . `docker-compose up --build`                   . NAME = "chat_app"  / can be of your own preference as well
-                                                    . PASSWORD = "postgres"  / can be of your own preference as well
+
+
+### Automatic                             -           Manual in setting.py under database 
+    . install docker if not already setup           . USER = "postgres"  / can be of your own 
+                                                      preference as well
+    . `docker-compose up --build`                   . NAME = "chat_app"  / can be of your own 
+                                                      preference as well
+                                                    . PASSWORD = "postgres"  / can be of your own 
+                                                      preference as well
                                                     . HOST = "localhost"
                                                     . PORT = 5432
 
-### Start Redis for webSocket ###
+### Migration command to be done in Database
+    . python manage.py makemigrations
+    . python manage.py migrate
+
+### Run server directly
+    . python manage.py runserver
+
+### Start Redis for webSocket 
     . run in terminal :
         `docker run -p 6379:6379 -d redis:5`
     
-### To check if connection is running with redis ###   (Not Mandatory)
+
+### To check if connection is running with redis    (Not Mandatory)
     $ python3 manage.py shell
     >>> import channels.layers
     >>> channel_layer = channels.layers.get_channel_layer()
@@ -28,7 +42,8 @@
     >>> async_to_sync(channel_layer.receive)('test_channel')
     {'type': 'hello'}
 
-### API's:
+
+## API's:
 
 .To Create User:
     `http://127.0.0.1:8000/chat-app/user/`   
@@ -51,14 +66,14 @@
             . Thread_type
 
 .To get Message-list:
-    For client:                                                                     For Agent:
-        `http://127.0.0.1:8000/chat-app/message-list/`                                  `http://127.0.0.1:8000/chat-app/message-list/` 
-        Form data:                                                                      Form data:
-            . Username                                                                      . Username
-            . Password                                                                      . Password
+    For client:                                               For Agent:
+        `http://127.0.0.1:8000/chat-app/message-list/`        `http://127.0.0.1:8000/chat-app/message-list/` 
+        Form data:                                             Form data:
+            . Username                                             .Username
+            . Password                                             .Password
             . Thread_type                                                                   
 
-        Displays the messages sent by client if thread is not closed                    Displays messages of unclosed thread in the priority basis
+
 
 . To get all the conversations between Client and Agent:
     `http://127.0.0.1:8000/chat-app/thread-list/`
@@ -71,7 +86,9 @@
         `http://127.0.0.1:8000/chat-app/<int:thread_id>/<int:user_id>`
 
 
-### Extra Features included:
+
+
+## Extra Features included:
     . Prevent multiple agents working on the same message at once.
     . Explore ways to surface messages that are more urgent and in need of immediate attention. 
 
