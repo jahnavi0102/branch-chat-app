@@ -46,6 +46,7 @@
 ## API's:
 
 .To Create User:
+
     `http://127.0.0.1:8000/chat-app/user/`   
         Form data : 
             . Username
@@ -53,11 +54,13 @@
             . role
 
 .To Delete User:
+
     `http://127.0.0.1:8000/chat-app/user/<int:pk>/`
         Param:
             . pk = user's id
 
 .To Create a thread, send message only done by client:
+
     `http://127.0.0.1:8000/chat-app/send-message/`
         Form data :
             . Username
@@ -66,22 +69,30 @@
             . Thread_type
 
 .To get Message-list:
-    For client:                                               For Agent:
-        `http://127.0.0.1:8000/chat-app/message-list/`        `http://127.0.0.1:8000/chat-app/message-list/` 
-        Form data:                                             Form data:
-            . Username                                             .Username
-            . Password                                             .Password
-            . Thread_type                                                                   
 
+    For client:                                               
+        `http://127.0.0.1:8000/chat-app/message-list/`       
+        Form data:                                             
+            . Username                                             
+            . Password                                             
+            . Thread_type 
+
+    For Agent:     
+        `http://127.0.0.1:8000/chat-app/message-list/` 
+    Form data:
+        .Username
+        .Password
 
 
 . To get all the conversations between Client and Agent:
+
     `http://127.0.0.1:8000/chat-app/thread-list/`
     Form data:
         . Agent_id
         . Client_id
 
 . To connect in chat for Agents and Client:
+
     Connect in two different browsers:
         `http://127.0.0.1:8000/chat-app/<int:thread_id>/<int:user_id>`
 
