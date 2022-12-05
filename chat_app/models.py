@@ -28,6 +28,7 @@ class Thread(models.Model):
     start_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(null=True)
     thread_type = models.PositiveSmallIntegerField(choices=Context)
+    count = models.PositiveSmallIntegerField()
 
 class Message(models.Model):
     message_body = models.TextField()

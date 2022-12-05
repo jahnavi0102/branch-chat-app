@@ -54,9 +54,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.user_id = self.scope["url_route"]["kwargs"]["user_id"]
         self.user = await self.get_user()
         self.thread = await self.get_thread()
-        if self.thread.agent_id:
+        count = self.thread.count
+        count +=1
+        if count >=2:
             self.room_group_name = str(self.thread.agent_id)+"and"+str(self.thread.client_id)
             raise DenyConnection("This conversation thread is already close.")
+        self.thread.count = count
         self.thread.agent_id = self.user_id
         await self.store_agent_in_thread()
         self.room_group_name = str(self.thread.agent_id)+"and"+str(self.thread.client_id)

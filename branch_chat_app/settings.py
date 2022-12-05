@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--54ut!)l^u5@$^8av37%!2hr00pzi7vp3-6xkt+-j6)y4dm5r@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -88,17 +88,30 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 import os
+# for docker
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'USER': os.environ.get('POSTGRES_USER'),
+#         'NAME': os.environ.get('POSTGRES_NAME'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#         'HOST': "localhost",
+#         'PORT': 5432,
+        
+#     }
+# }
+#for manual purpose
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': os.environ.get('POSTGRES_USER'),
-        'NAME': os.environ.get('POSTGRES_NAME'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'USER': 'postgres',
+        'NAME': 'chatapp',
         'HOST': "localhost",
         'PORT': 5432,
-        
+        'PASSWORD': 'postgres', 
     }
 }
+
 
 
 # Password validation

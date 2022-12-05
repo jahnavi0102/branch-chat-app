@@ -46,4 +46,6 @@ for index, row in df.iterrows():
         thread.save()
         message = Message(thread_id = thread.id, sender_id = user.id,message_body=message, timestamp=timestamp)
         message.save()
+
+print("Data uploaded")
     

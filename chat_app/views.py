@@ -75,27 +75,23 @@ class MessageViewSet(viewsets.ViewSet):
             except User.DoesNotExist:
                 message = {"missing": f"Either password is wrong or {username} doesn't exist"}
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
-
-            if user.role == "agent":
-                thread = tuple(Thread.objects.filter(agent=None).order_by('thread_type')[:11])
+            if user.role == "AGENT":
+                thread = list(Thread.objects.filter(agent=None).order_by('thread_type')[:11])
                 all_messages = Message.objects.filter(thread__in=thread, is_read=False).order_by('sender').distinct('sender')         
                 all_message=[]
-                print(all_messages)
                 for message in all_messages:
                     get_message={}
-                    print(message)
                     get_message["message"] =  message.message_body
                     get_message["client_id"] = message.sender.id
                     get_message["timestamp"] = message.timestamp
                     get_message["is_read"] = message.is_read
                     all_message.append(get_message)
-                print(all_message)
                 message = {"chats_recieved":all_message}
                 return Response(message, status=status.HTTP_200_OK)
 
-            if user.role == "client":
+            elif user.role == "client":
                 if not request.data.get("thread_type"):
-                    message = {"missing": f"Client must mention the conversation type [1 for loan, 2 for payment, 3 for other]."}
+                    message = {"missing": "Client must mention the conversation type [1 for loan, 2 for payment, 3 for other]."}
                     return Response(message, status=status.HTTP_400_BAD_REQUEST)
                 try:
                     thread = Thread.objects.get(client__username=username, thread_type=request.data["thread_type"])
@@ -125,7 +121,6 @@ class MessageViewSet(viewsets.ViewSet):
             if not (request.data.get("username") and request.data.get("password") and request.data.get("message_body") and request.data.get("thread_type")):
                 message = {"error":"'username','password' and 'message_body' is a must"}
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
-            print("ok")
             username = request.data["username"]
             password = request.data["password"]
             message_body = request.data["message_body"]
